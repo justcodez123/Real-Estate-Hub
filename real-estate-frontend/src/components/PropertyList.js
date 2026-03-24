@@ -128,8 +128,7 @@ const PropertyList = () => {
                         <option value="HOUSE">House</option>
                         <option value="APARTMENT">Apartment</option>
                         <option value="CONDO">Condo</option>
-                        <option value="TOWNHOUSE">Townhouse</option>
-                        <option value="LAND">Land</option>
+                        <option value="VILLA">Villa</option>
                         <option value="COMMERCIAL">Commercial</option>
                     </select>
                     <select name="listingType" value={filters.listingType} onChange={handleFilterChange}>

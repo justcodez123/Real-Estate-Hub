@@ -2,6 +2,8 @@ package com.real_estate.real_estate_backend.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,15 +23,19 @@ public class PropertyImage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable = false)
 	private String imageURL;
+	
 	/*Is this the main photo to show on this card*/
-	private boolean isPrimary;
+	private boolean isPrimary = false;
+	
+	/*To handle Frontend's recorederImages API*/
+	private int orderIndex = 0;
 	
 	/*The link to the parent property*/
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "property_id")
 	@JsonIgnore
-	
 	private Property property;
 	
 }
