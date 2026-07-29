@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,8 +21,10 @@ import com.real_estate.real_estate_backend.models.PropertyImage;
 import com.real_estate.real_estate_backend.repository.PropertyImageRepository;
 import com.real_estate.real_estate_backend.repository.PropertyRepository;
 
+
 @RestController
 @RequestMapping("api/properties/{propertyId}/images")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class PropertyImageController {
 	
 	@Autowired
