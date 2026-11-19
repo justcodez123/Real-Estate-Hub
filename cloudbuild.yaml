@@ -53,6 +53,7 @@ steps:
           --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/real-estate-backend:$COMMIT_SHA \
           --region=${_REGION} \
           --platform=managed \
+          --service-account=real-estate-deployer-sa@$PROJECT_ID.iam.gserviceaccount.com \
           --allow-unauthenticated \
           --port=8080 \
           --min-instances=0 \
