@@ -8,18 +8,18 @@
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
     "axios": "1.13.2",
+    "dotenv": "^17.4.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.12.0",
-    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "build:aws": "cross-env REACT_APP_API_URL=http://13.220.57.64:8080/api REACT_APP_ENV=production react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "build:aws": "cross-env VITE_API_URL=http://localhost:8080/api VITE_ENV=production vite build",
+    "build:dev": "cross-env VITE_API_URL=http://localhost:8080/api VITE_ENV=development vite build",
+    "test": "vite test"
   },
   "eslintConfig": {
     "extends": [
@@ -40,6 +40,8 @@
     ]
   },
   "devDependencies": {
-    "cross-env": "^10.1.0"
+    "@vitejs/plugin-react": "^6.0.5",
+    "cross-env": "^10.1.0",
+    "vite": "^8.2.0"
   }
 }

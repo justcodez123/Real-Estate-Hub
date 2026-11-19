@@ -1,10 +1,7 @@
 package com.real_estate.real_estate_backend.controller;
 
 import com.real_estate.real_estate_backend.controller.enums.PropertyStatus;
-import com.real_estate.real_estate_backend.dto.ApiResponse;
 import com.real_estate.real_estate_backend.models.Property;
-import com.real_estate.real_estate_backend.models.PropertyImage;
-import com.real_estate.real_estate_backend.repository.PropertyImageRepository;
 import com.real_estate.real_estate_backend.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,14 +15,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/properties")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+//@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class PropertyController {
 
     @Autowired
     private PropertyRepository propertyRepository;
-
-    @Autowired
-    private PropertyImageRepository propertyImageRepository;
 
 
     // --- 1. GET ALL (Paged) ---
@@ -68,19 +62,7 @@ public class PropertyController {
     }
 
 
-    // --- 4. GET IMAGES FOR A PROPERTY ---
-    // GET /api/properties/1/images
-    @GetMapping("/{id}/images")
-    public ApiResponse getPropertyImages(@PathVariable Long id) {
-        if (!propertyRepository.existsById(id)) {
-            return new ApiResponse(false, "Property not found", null);
-        }
-        List<PropertyImage> images = propertyImageRepository.findByPropertyIdOrderByOrderIndexAsc(id);
-        return new ApiResponse(true, "Images fetched successfully", images);
-    }
-
-
-    // --- 5. GET BY CITY ---
+    // --- 4. GET BY CITY ---
     // GET /api/properties/city/Pune
     @GetMapping("/city/{city}")
     public List<Property> getPropertiesByCity(@PathVariable String city) {
@@ -110,4 +92,5 @@ public class PropertyController {
         propertyRepository.deleteById(id);
         return ResponseEntity.noContent().build();        // 204 No Content
     }
+
 }

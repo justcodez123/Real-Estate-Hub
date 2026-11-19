@@ -12,6 +12,5 @@ import com.real_estate.real_estate_backend.models.PropertyImage;
 public interface PropertyImageRepository extends JpaRepository<PropertyImage, Long>{
 	/*Find the images belonging to the specific property Id*/
 	List<PropertyImage> findByPropertyIdOrderByOrderIndexAsc(Long PropertyId);
-	
-	
+
 }

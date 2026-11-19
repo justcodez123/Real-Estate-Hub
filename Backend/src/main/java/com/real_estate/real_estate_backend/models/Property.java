@@ -1,5 +1,7 @@
 package com.real_estate.real_estate_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ import com.real_estate.real_estate_backend.controller.enums.PropertyType;
 
 @Entity
 @Table(name = "properties")
-@Data   // ✅ Generates ALL getters, setters, toString, equals, hashCode automatically
+@Data
 public class Property {
 
     @Id
@@ -22,6 +24,7 @@ public class Property {
     @Column(nullable = false)
     private String title;
 
+    @Column(length = 2000)
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -36,7 +39,15 @@ public class Property {
     private String address;
     private String city;       
     private String state;
+
+    @JsonProperty("zipCode")
+    @JsonAlias({"zipCode", "pincode"})
     private String pincode;
+
+    private Integer bedrooms;
+    private Integer bathrooms;
+    private Double squareFeet;
+    private Integer yearBuilt;
 
     @Column(nullable = false)
     private BigDecimal price;

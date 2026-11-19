@@ -1,0 +1,91 @@
+name: Build and Deploy Real Estate Hub to GCP Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: project-70b69410-47cf-44c8-833
+  REGION: asia-south1
+  AR_REPO: real-estate-repo
+  BACKEND_SERVICE: real-estate-backend
+  FRONTEND_SERVICE: real-estate-frontend
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    name: Build & Rollout to Cloud Run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud (Keyless OIDC)
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build and push Backend container
+        run: |
+          IMAGE="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.AR_REPO }}/${{ env.BACKEND_SERVICE }}:${{ github.sha }}"
+          docker build -t "$IMAGE" ./Backend
+          docker push "$IMAGE"
+
+      - name: Deploy Backend to Cloud Run
+        id: deploy-backend
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.BACKEND_SERVICE }}
+          region: ${{ env.REGION }}
+          image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.AR_REPO }}/${{ env.BACKEND_SERVICE }}:${{ github.sha }}
+          flags: >-
+            --allow-unauthenticated
+            --port=8080
+            --min-instances=0
+            --max-instances=2
+
+      - name: Build and push Frontend container (with live Backend API URL)
+        run: |
+          BACKEND_URL="${{ steps.deploy-backend.outputs.url }}"
+          IMAGE="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.AR_REPO }}/${{ env.FRONTEND_SERVICE }}:${{ github.sha }}"
+          docker build \
+            --build-arg VITE_API_URL="${BACKEND_URL}/api" \
+            -t "$IMAGE" \
+            ./real-estate-frontend
+          docker push "$IMAGE"
+
+      - name: Deploy Frontend to Cloud Run
+        id: deploy-frontend
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.FRONTEND_SERVICE }}
+          region: ${{ env.REGION }}
+          image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.AR_REPO }}/${{ env.FRONTEND_SERVICE }}:${{ github.sha }}
+          flags: >-
+            --allow-unauthenticated
+            --port=8080
+            --min-instances=0
+            --max-instances=2
+
+      - name: Update Backend CORS Allowed Origins
+        run: |
+          FRONTEND_URL="${{ steps.deploy-frontend.outputs.url }}"
+          gcloud run services update ${{ env.BACKEND_SERVICE }} \
+            --project=${{ env.PROJECT_ID }} \
+            --region=${{ env.REGION }} \
+            --update-env-vars="^@^CORS_ALLOWED_ORIGINS=${FRONTEND_URL},http://localhost:5173" \
+            --quiet

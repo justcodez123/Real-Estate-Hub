@@ -1,128 +1,136 @@
 .upgrade-container {
-    padding: 40px 20px;
-    max-width: 1400px;
+    padding: 48px 24px 72px;
+    max-width: 1360px;
     margin: 0 auto;
 }
 
 .upgrade-header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 48px;
 }
 
 .upgrade-header h1 {
-    color: #333;
-    font-size: 36px;
+    color: var(--text-primary);
+    font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+    font-weight: 800;
     margin-bottom: 10px;
 }
 
 .upgrade-header > p {
-    color: #6c757d;
-    font-size: 18px;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
 }
 
 .current-plan {
-    margin-top: 20px;
-    font-size: 16px;
+    margin-top: 16px;
+    font-size: 0.925rem;
+    color: var(--text-secondary);
 }
 
 .plan-badge {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-weight: 600;
+    background: var(--primary-soft);
+    color: var(--primary);
+    border: 1px solid var(--primary-border);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.78rem;
 }
 
 .plans-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 24px;
     margin-bottom: 40px;
 }
 
 .plan-card {
-    background: white;
-    border-radius: 12px;
-    padding: 35px 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    padding: 36px 28px;
+    box-shadow: var(--shadow-sm);
     position: relative;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
 }
 
 .plan-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
 }
 
 .plan-card.popular {
-    border: 2px solid #667eea;
-    transform: scale(1.02);
+    border: 2px solid var(--primary);
+    box-shadow: 0 12px 32px rgba(79, 70, 229, 0.14);
 }
 
 .plan-card.current {
-    border: 2px solid #28a745;
+    border: 2px solid var(--emerald);
 }
 
-.popular-badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 5px 20px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-}
-
+.popular-badge,
 .current-badge {
     position: absolute;
     top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #28a745;
-    color: white;
-    padding: 5px 20px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
+    padding: 4px 16px;
+    border-radius: var(--radius-full);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.popular-badge {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.current-badge {
+    background-color: var(--emerald);
+    color: #ffffff;
 }
 
 .plan-card h2 {
     text-align: center;
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 15px;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 12px;
 }
 
 .price {
     text-align: center;
-    font-size: 42px;
-    font-weight: bold;
-    color: #667eea;
-    margin-bottom: 25px;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 24px;
 }
 
 .price span {
-    font-size: 16px;
-    color: #6c757d;
-    font-weight: normal;
+    font-size: 0.925rem;
+    color: var(--text-muted);
+    font-weight: 500;
 }
 
 .features-list {
     list-style: none;
     padding: 0;
-    margin-bottom: 30px;
+    margin-bottom: 28px;
+    flex: 1;
 }
 
 .features-list li {
     padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--border-subtle);
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 
 .features-list li:last-child {
@@ -130,65 +138,64 @@
 }
 
 .features-list li.included {
-    color: #333;
+    color: var(--text-primary);
 }
 
 .features-list li.not-included {
-    color: #adb5bd;
+    color: var(--text-light);
     text-decoration: line-through;
 }
 
 .check {
-    color: #28a745;
-    font-weight: bold;
+    color: var(--emerald);
+    font-weight: 700;
 }
 
 .cross {
-    color: #dc3545;
+    color: var(--text-light);
 }
 
 .upgrade-btn {
     width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    padding: 12px 16px;
+    background: var(--primary);
+    color: #ffffff;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.925rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+    transition: all var(--transition-fast);
 }
 
 .upgrade-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    background: var(--primary-hover);
+    transform: translateY(-1px);
 }
 
 .current-btn {
     width: 100%;
-    padding: 14px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 12px 16px;
+    background-color: var(--emerald-soft);
+    color: var(--emerald);
+    border: 1px solid var(--emerald-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.925rem;
     font-weight: 600;
-    cursor: not-allowed;
-    opacity: 0.8;
+    cursor: default;
 }
 
 .downgrade-btn {
     width: 100%;
-    padding: 14px;
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 12px 16px;
+    background-color: var(--bg-subtle);
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    font-size: 0.925rem;
     font-weight: 600;
-    cursor: not-allowed;
-    opacity: 0.6;
+    cursor: default;
 }
 
 .back-link {
@@ -196,22 +203,8 @@
 }
 
 .back-link a {
-    color: #667eea;
+    color: var(--primary);
     text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.back-link a:hover {
-    text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-    .plans-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .plan-card.popular {
-        transform: none;
-    }
+    font-size: 0.925rem;
+    font-weight: 600;
 }

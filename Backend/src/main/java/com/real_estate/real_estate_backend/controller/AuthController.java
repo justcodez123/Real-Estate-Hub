@@ -19,7 +19,7 @@ import com.real_estate.real_estate_backend.repository.UserRepository;
 @RestController
 @RequestMapping("/api/auth")
 
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+//@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class AuthController {
 	@Autowired
 	private UserRepository userRepository;

@@ -1,0 +1,8 @@
+target/
+.idea/
+.metadata/
+.settings/
+.vscode/
+*.iml
+.git/
+uploads/
