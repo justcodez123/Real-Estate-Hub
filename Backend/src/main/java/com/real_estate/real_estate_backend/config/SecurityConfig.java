@@ -27,13 +27,13 @@ public class SecurityConfig {
 
     // Inject the list from application.properties
     // The syntax after the colon (:http://localhost:3000) acts as a fallback default if the property is missing
-    @Value("${app.cors.allowed-origins:http://localhost:5173,http://localhost:3000}")
+    @Value("${app.cors.allowed-origins:http://localhost:5173,http://localhost:3000,https://*.run.app}")
     private List<String> allowedOrigins;
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(allowedOrigins);
+        corsConfiguration.setAllowedOriginPatterns(allowedOrigins);
 
         // Pass the injected origins list here
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));

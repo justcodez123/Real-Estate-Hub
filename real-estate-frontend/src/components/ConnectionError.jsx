@@ -1,4 +1,5 @@
 import React from 'react';
+import API_BASE_URL from '../config/api.config';
 import './ConnectionError.css';
 
 const ConnectionError = ({ error }) => {
@@ -15,7 +16,7 @@ const ConnectionError = ({ error }) => {
                 {isConnectionRefused && (
                     <>
                         <p className="error-message">
-                            The backend server at <code>http://localhost:8080</code> is not responding.
+                            The backend server at <code>{API_BASE_URL}</code> is not responding.
                         </p>
 
                         <div className="error-solutions">
@@ -57,12 +58,12 @@ const ConnectionError = ({ error }) => {
                                 <h4>4. Test Backend Connection</h4>
                                 <p>Open this URL in your browser:</p>
                                 <a
-                                    href="http://localhost:8080/api/properties/available"
+                                    href={`${API_BASE_URL}/properties/available`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="test-link"
                                 >
-                                    http://localhost:8080/api/properties/available
+                                    {`${API_BASE_URL}/properties/available`}
                                 </a>
                                 <p className="small-text">
                                     ✅ If you see JSON data, backend is working!<br/>

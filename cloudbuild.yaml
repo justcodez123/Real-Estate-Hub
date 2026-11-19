@@ -116,7 +116,7 @@ steps:
 
         gcloud run services update ${_BACKEND_SERVICE} \
           --region=${_REGION} \
-          --update-env-vars="^@^CORS_ALLOWED_ORIGINS=$${FRONTEND_URL},http://localhost:5173" \
+          --update-env-vars="^@^CORS_ALLOWED_ORIGINS=$${FRONTEND_URL},https://*.run.app,http://localhost:5173" \
           --quiet
 
 images:
