@@ -45,6 +45,7 @@ steps:
     args:
       - '-c'
       - |
+        set -e
         EXTRA_FLAGS=""
         if [ -n "${_CLOUD_SQL_INSTANCE}" ]; then
           EXTRA_FLAGS="--add-cloudsql-instances=${_CLOUD_SQL_INSTANCE} --set-env-vars=SPRING_DATASOURCE_URL=jdbc:postgresql:///${_DB_NAME}?cloudSqlInstance=${_CLOUD_SQL_INSTANCE}&socketFactory=com.google.cloud.sql.postgres.SocketFactory,DB_USER=${_DB_USER} --set-secrets=DB_PASS=db-pass:latest"
@@ -74,6 +75,7 @@ steps:
     args:
       - '-c'
       - |
+        set -e
         BACKEND_URL=$(cat /workspace/backend_url.txt)
         docker build \
           --build-arg VITE_API_URL="$${BACKEND_URL}/api" \
@@ -98,6 +100,7 @@ steps:
     args:
       - '-c'
       - |
+        set -e
         gcloud run deploy ${_FRONTEND_SERVICE} \
           --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/real-estate-frontend:$COMMIT_SHA \
           --region=${_REGION} \
